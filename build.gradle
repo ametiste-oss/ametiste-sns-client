@@ -43,6 +43,10 @@ subprojects {
 
     repositories {
         mavenCentral()
+        jcenter()
+        maven {
+            url  "http://dl.bintray.com/ametiste-oss/maven"
+        }
     }
 
     dependencies {

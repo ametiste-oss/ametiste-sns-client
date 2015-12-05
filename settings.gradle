@@ -1,2 +1,5 @@
 rootProject.name = 'ametiste-sns-client'
+include 'sns-client-core'
+include 'sns-client-experimental'
+include 'sns-client-mock'
 

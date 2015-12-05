@@ -1,0 +1,4 @@
+
+dependencies {
+    compile project(":sns-client-core")
+}

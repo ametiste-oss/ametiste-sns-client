@@ -1,0 +1,29 @@
+plugins {
+    id "com.jfrog.bintray" version "1.3.1"
+}
+
+apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray.gradle"
+
+description = "Ametiste Notification Service client library"
+
+
+ext {
+    ameIfacesVersion = "0.1.1-RELEASE"
+}
+
+dependencies {
+
+    compile "org.springframework:spring-web:${springVersion}"
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.2.4'
+    compile 'commons-lang:commons-lang:2.6'
+    compile "org.ametiste.ifaces:ifaces-protocol:${ameIfacesVersion}"
+
+    compile "org.ametiste.metrics:metrics-annotations:0.1.0-RELEASE"
+
+    compile "javax.servlet:javax.servlet-api:3.0.1"
+
+    testCompile 'com.jayway.jsonpath:json-path:0.8.1'
+    testCompile "org.springframework:spring-test:${springVersion}"
+}
+
+
