@@ -33,13 +33,7 @@ public class AggregatingReportDriverTest {
 
 	private static final String SENDER_TEST = "sender.test";
 
-	private InMemoryReportAggregator aggregator;
-
-	private ByTimerReleaseService releaser;
-
 	private AggregatingReportDriver driver;
-
-	private StoredReportFactory factory;
 
 	@Mock
 	private ReportServiceDriver releaseDriver;
@@ -51,13 +45,12 @@ public class AggregatingReportDriverTest {
 
 		MockitoAnnotations.initMocks(this);
 
-		factory = new ByExceptionTypeReportFactory();
-		aggregator = new InMemoryReportAggregator();
-		aggregator.setFactory(factory);
+		InMemoryReportAggregator aggregator = new InMemoryReportAggregator();
+		aggregator.setFactory( new ByExceptionTypeReportFactory());
 		aggregator.setReleasePeriod(1000);
 		aggregator.setReportsCapacity(10);
 
-		releaser = new ByTimerReleaseService();
+		ByTimerReleaseService releaser = new ByTimerReleaseService();
 		releaser.setAggregator(aggregator);
 		releaser.setReleasePeriod(50);
 		releaser.setDriver(releaseDriver);
@@ -79,9 +72,10 @@ public class AggregatingReportDriverTest {
 		Report report = new Report(UUID.randomUUID(), new Date(), CONTENT_TYPE,
 				SENDER_TEST, ThrowableContentTemplate.createContent(new IllegalArgumentException("some error"))
 				.build());
-		
+
+		Date date = new Date();
 		for (int i = 0; i < 10; i++) {
-			driver.createNewReport(report.getReportId(), new Date(), report.getReportType(), report.getReportSender(),
+			driver.createNewReport(report.getReportId(), date, report.getReportType(), report.getReportSender(),
 					report.getReportContent());
 		}
 
@@ -95,9 +89,9 @@ public class AggregatingReportDriverTest {
 		Report report = new Report(UUID.randomUUID(), new Date(), CONTENT_TYPE,
 				SENDER_TEST, ThrowableContentTemplate.createContent(new IllegalArgumentException("some error"))
 						.build());
-
+		Date date = new Date();
 		for (int i = 0; i < 10; i++) {
-			driver.createNewReport(report.getReportId(), new Date(), report.getReportType(), report.getReportSender(),
+			driver.createNewReport(report.getReportId(),date, report.getReportType(), report.getReportSender(),
 					report.getReportContent());
 		}
 
@@ -116,9 +110,9 @@ public class AggregatingReportDriverTest {
 		Report report = new Report(UUID.randomUUID(), new Date(), CONTENT_TYPE, SENDER_TEST, ThrowableContentTemplate
 				.createContent(new IllegalArgumentException("some error"))
 						.build());
-
+		Date date = new Date();
 		for (int i = 0; i < 20; i++) {
-			driver.createNewReport(report.getReportId(), new Date(), report.getReportType(), report.getReportSender(),
+			driver.createNewReport(report.getReportId(), date, report.getReportType(), report.getReportSender(),
 					report.getReportContent());
 		}
 
@@ -130,9 +124,7 @@ public class AggregatingReportDriverTest {
 		verify(releaseDriver, times(1)).createNewReport(any(UUID.class), any(Date.class), anyString(), anyString(),
 				argumentCaptor.capture());
 
-		HashMap<String, Serializable> map =
-
-		(HashMap<String, Serializable>) argumentCaptor.getValue();
+		HashMap<String, Serializable> map = (HashMap<String, Serializable>) argumentCaptor.getValue();
 		assertEquals(10, map.get("reportsAmount"));
 
 
@@ -141,16 +133,16 @@ public class AggregatingReportDriverTest {
 	@Test
 	public void testCreateNewReportWithDifferentReports() throws Exception {
 		Report report = new Report(UUID.randomUUID(), new Date(), CONTENT_TYPE,
-				SENDER_TEST, ThrowableContentTemplate.createContent(new NullPointerException("some error"))
+				SENDER_TEST, ThrowableContentTemplate.createContent(new IllegalStateException("some error"))
 						.build());
 		Report report2 = new Report(UUID.randomUUID(), new Date(), CONTENT_TYPE,
 				SENDER_TEST, ThrowableContentTemplate.createContent(new IllegalArgumentException("some error"))
 						.build());
-
+		Date date = new Date();
 		for (int i = 0; i < 7; i++) {
-			driver.createNewReport(report.getReportId(), new Date(), report.getReportType(), report.getReportSender(),
+			driver.createNewReport(report.getReportId(), date, report.getReportType(), report.getReportSender(),
 					report.getReportContent());
-			driver.createNewReport(report2.getReportId(), new Date(), report2.getReportType(),
+			driver.createNewReport(report2.getReportId(), date, report2.getReportType(),
 					report2.getReportSender(), report2.getReportContent());
 		}
 

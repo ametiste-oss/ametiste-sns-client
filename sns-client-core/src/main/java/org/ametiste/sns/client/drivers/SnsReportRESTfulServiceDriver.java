@@ -66,6 +66,9 @@ public class SnsReportRESTfulServiceDriver implements ReportServiceDriver {
 			new ReportMessage(reportId, date, reportType, reportSender, reportContent);
 		
 		HttpProtocolMessage<Map<String, Object>> protocolMessage = protocol.buildMessage(reportMessage);
+		if(!protocolMessage.getMethod().equals("PUT")) {
+			throw new UnsupportedMethodException("Illegal method exception.");
+		}
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
 		
@@ -76,13 +79,8 @@ public class SnsReportRESTfulServiceDriver implements ReportServiceDriver {
 		}
 		
 		HttpEntity<Map<String, Object>> requestEntity =
-				new HttpEntity<Map<String, Object>>(protocolMessage.getBody(), httpHeaders);
-		
-		if (protocolMessage.getMethod().equals("PUT")) {
-			restTemplate.put("http://" + serviceHost + protocolMessage.getPath(), requestEntity);
-		} else {
-			throw new RuntimeException("Illegal method exception.");
-		}
+				new HttpEntity<>(protocolMessage.getBody(), httpHeaders);
+		restTemplate.put("http://" + serviceHost + protocolMessage.getPath(), requestEntity);
 	}
 
 }
