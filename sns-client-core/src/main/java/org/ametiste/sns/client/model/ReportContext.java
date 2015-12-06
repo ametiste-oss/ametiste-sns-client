@@ -13,7 +13,7 @@ public class ReportContext implements Serializable {
 	private final HashMap<String, Serializable> context;
 
 	public ReportContext() {
-		context = new HashMap<String, Serializable>();
+		context = new HashMap<>();
 	}
 
 	public ReportContext append(String name, Serializable value) {
