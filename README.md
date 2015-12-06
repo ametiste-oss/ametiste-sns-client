@@ -1,2 +1,2 @@
-# ametiste-sns-client
+# ametiste SNS client
 Client for notification service
