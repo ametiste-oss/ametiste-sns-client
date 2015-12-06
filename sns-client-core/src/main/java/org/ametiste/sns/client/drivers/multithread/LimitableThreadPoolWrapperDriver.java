@@ -23,6 +23,8 @@ public class LimitableThreadPoolWrapperDriver implements ReportServiceDriver {
                                             String snsNamespace,
                                             int threadsNumber,
                                             int queueCapacity) {
+
+        //TODO checks
         this.driver = driver;
         this.snsNamespace = snsNamespace;
         executor = new ThreadPoolExecutor(threadsNumber, threadsNumber,0L, TimeUnit.MILLISECONDS,
