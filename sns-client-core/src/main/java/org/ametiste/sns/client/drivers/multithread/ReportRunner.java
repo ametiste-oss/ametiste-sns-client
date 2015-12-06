@@ -22,6 +22,7 @@ public class ReportRunner implements Runnable {
 			this.driver.createNewReport(report.getReportId(), report.getDate(), report.getReportType(),
 				report.getReportSender(), report.getReportContent());
 		} catch (Exception e) {
+			//TODO maybe log?
 
 		}
 
