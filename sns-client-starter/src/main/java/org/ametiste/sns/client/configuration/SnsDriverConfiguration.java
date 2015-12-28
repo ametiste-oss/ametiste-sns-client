@@ -5,6 +5,7 @@ import org.ametiste.sns.client.drivers.SnsReportRESTfulServiceDriver;
 import org.ametiste.sns.client.drivers.multithread.LimitableThreadPoolWrapperDriver;
 import org.ametiste.sns.client.drivers.protocol.RestfulReportCreationProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -26,12 +27,12 @@ public class SnsDriverConfiguration {
     @Bean
     public ReportServiceDriver singleThreadDriver() {
         return new SnsReportRESTfulServiceDriver(props.getHost(),
-                new RestTemplate(), new RestfulReportCreationProtocol());
+                new RestTemplate(), new RestfulReportCreationProtocol(props.getRelativePath()));
     }
 
 
     @Bean(name="driver")
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(name="driver")
     public ReportServiceDriver driver() {
         return new LimitableThreadPoolWrapperDriver(singleThreadDriver(), props.getThread().getName(),
                 props.getNamespace(), props.getThread().getNumber(), props.getCapacity());

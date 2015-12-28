@@ -17,6 +17,7 @@ public class SnsProperties {
     private Thread thread = new Thread();
     private int capacity = 1000;
     private String sender;
+    private String relativePath = "";
 
 
     public String getNamespace() {
@@ -57,6 +58,14 @@ public class SnsProperties {
 
     public void setSender(String sender) {
         this.sender = sender;
+    }
+
+    public String getRelativePath() {
+        return relativePath;
+    }
+
+    public void setRelativePath(String relativePath) {
+        this.relativePath = relativePath;
     }
 
 

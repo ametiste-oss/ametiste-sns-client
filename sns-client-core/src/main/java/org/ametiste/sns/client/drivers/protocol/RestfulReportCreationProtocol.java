@@ -14,10 +14,12 @@ public class RestfulReportCreationProtocol implements
 		Protocol<ReportMessage, HttpProtocolMessage<Map<String, Object>>> {
 
 	private final Map<String, List<String>> headers = new HashMap<>();
-	
-	public RestfulReportCreationProtocol() {
+	private final String relativePath;
+
+	public RestfulReportCreationProtocol(String relativePath) {
 		headers.put("Content-Type", Collections.singletonList("application/json"));
 		headers.put("Accept", Collections.singletonList("application/json"));
+		this.relativePath = relativePath;
 	}
 	
 	@Override
@@ -34,7 +36,7 @@ public class RestfulReportCreationProtocol implements
 
 		HttpProtocolMessage<Map<String, Object>> httpProtocolMessage = new HttpProtocolMessage<>(
 			"PUT", 
-			"/" + message.getReportId().toString(),
+			"/" + relativePath + message.getReportId().toString(),
 				//TODO hardcoded to root, should be configured, but not on revamp stage
 			headers, 
 			null, 

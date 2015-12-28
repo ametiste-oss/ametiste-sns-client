@@ -55,7 +55,7 @@ public class SnsReportRESTfulServiceDriverTest {
 			.andRespond(withSuccess());
 		
 		SnsReportRESTfulServiceDriver client = new SnsReportRESTfulServiceDriver(
-				VALID_HOST, restTemplate, new RestfulReportCreationProtocol());
+				VALID_HOST, restTemplate, new RestfulReportCreationProtocol(""));
 		
 		client.createNewReport(reportId, date,
 				reportType, reportSender, new MockReport());

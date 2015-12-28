@@ -26,7 +26,7 @@ public class SnsReportRESTfulServiceDriver implements ReportServiceDriver {
 
 	public static final String DEFAULT_SERVICE_HOST = "localhost"; //TODO consider default
 	
-	public static final RestfulReportCreationProtocol DEFAULT_PROTOCOL = new RestfulReportCreationProtocol();
+	public static final RestfulReportCreationProtocol DEFAULT_PROTOCOL = new RestfulReportCreationProtocol("");
 	
 	private final RestTemplate restTemplate;
 	
