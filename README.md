@@ -40,7 +40,11 @@ Library at a glance is described here, for more detailed description view [wiki]
 
 ##Description 
 
-SNS client library provides client code with creator, that registers any events of interest in form of object, commonly called by library as report. Report should contain id, type, sender and date, and may contain any context data of client's interest. All fields are to be described more detailed. 
+SNS client library provides client code with creator, that registers any events of interest in form of object, commonly known by library as report. Report data should contain id, type, sender and date, and may contain any context data of client's interest. 
+There's any type of serializable data can be registered, and herefore any implementation of ReportData interface, but core module contains supporting implementations: 
+
+- *org.ametiste.sns.client.creators.injectors.support.report.ErrorReportData* - to create report with error content type, and inject Throwable to it 
+- *org.ametiste.sns.client.creators.injectors.support.report.HttpRequestReportData* - to create report out of HttpServletRequest 
 
 ##Binaries
 All non experimental dependencies is accessible at bintray central.
@@ -54,7 +58,7 @@ repositories {
      mavenCentral()
      jcenter()
 }
-compile ""org.ametiste.sns:sns-client-starter:${snsClientVersion}"
+compile "org.ametiste.sns:sns-client-starter:${snsClientVersion}"
 ```
 
 #####Maven
