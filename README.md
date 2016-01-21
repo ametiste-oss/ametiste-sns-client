@@ -73,7 +73,7 @@ compile ""org.ametiste.sns:sns-client-starter:${snsClientVersion}"
 
 <dependency>
 	<groupId>org.ametiste.sns</groupId>
-	<artifactId>sns-client-starterr</artifactId>
+	<artifactId>sns-client-starter</artifactId>
 	<version>snsClient.version</version>
 </dependency>
 ```
